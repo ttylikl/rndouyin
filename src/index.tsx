@@ -3,7 +3,7 @@ import { EventEmitter } from 'events';
 
 type RndouyinType = {
   multiply(a: number, b: number): Promise<number>;
-  hellodouyin():  Promise<string>;
+  hellodouyin(): Promise<string>;
   dyauth(): Promise<string>;
   registerApp(clientKey: string): Promise<string>;
   sendAuthRequest(): Promise<any>;
@@ -12,11 +12,10 @@ type RndouyinType = {
 
 const { Rndouyin } = NativeModules;
 
-
 // Event emitter to dispatch request and response from WeChat.
 const emitter = new EventEmitter();
 
-DeviceEventEmitter.addListener('WeChat_Resp', resp => {
+DeviceEventEmitter.addListener('WeChat_Resp', (resp) => {
   emitter.emit(resp.type, resp);
 });
 
@@ -38,10 +37,10 @@ DeviceEventEmitter.addListener('WeChat_Resp', resp => {
 //   });
 // }
 
-Rndouyin.foo = (): Promise<any> =>{
-  return new Promise((resolve)=>{
-    return resolve("okokok");
-  })
-}
+Rndouyin.foo = (): Promise<any> => {
+  return new Promise((resolve) => {
+    return resolve('okokok');
+  });
+};
 
 export default Rndouyin as RndouyinType;
