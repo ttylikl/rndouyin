@@ -15,31 +15,28 @@ const { Rndouyin } = NativeModules;
 // Event emitter to dispatch request and response from WeChat.
 const emitter = new EventEmitter();
 
-DeviceEventEmitter.addListener('WeChat_Resp', (resp) => {
+DeviceEventEmitter.addListener('DouYin_Resp', (resp) => {
+  console.log('DouYin_Resp', resp);
   emitter.emit(resp.type, resp);
 });
-
-/**
- * @method sendAuthRequest
- * @param {Array} scopes - the scopes for authentication.
- * @return {Promise}
- */
-// function sendAuthRequest(): Promise<any> {
-//   return new Promise((resolve, reject) => {
-//     Rndouyin.dyauth();
-//     emitter.once('SendAuth.Resp', resp => {
-//       if (resp.errCode === 0) {
-//         resolve(resp);
-//       } else {
-//         reject(resp);
-//       }
-//     });
-//   });
-// }
 
 Rndouyin.foo = (): Promise<any> => {
   return new Promise((resolve) => {
     return resolve('okokok');
+  });
+};
+
+Rndouyin.sendAuthRequest = (): Promise<any> => {
+  return new Promise((resolve, reject) => {
+    emitter.once('SendAuth.Resp', (resp) => {
+      console.log('SendAuth.Resp', resp);
+      if (resp.errCode === 0) {
+        resolve(resp);
+      } else {
+        reject(resp);
+      }
+    });
+    Rndouyin.dyauth();
   });
 };
 

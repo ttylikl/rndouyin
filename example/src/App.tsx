@@ -40,7 +40,7 @@ export default class Home extends React.Component<Props, State> {
     console.log('onTest3', e);
     let msg: string = await Rndouyin.registerApp('awsxdh3k1fiojgnu'); // 申请完成后替换
     this.setState({ msg });
-    await Rndouyin.dyauth();
+    await Rndouyin.sendAuthRequest();
   };
 
   render() {
