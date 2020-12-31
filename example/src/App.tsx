@@ -42,7 +42,7 @@ export default class Home extends React.Component<Props, State> {
     this.setState({ msg });
     let r = await Rndouyin.sendAuthRequest();
     console.log('sendAuth:', r);
-    msg = msg + "\n" + r 
+    msg = msg + "\n" + r;
     this.setState({ msg });
   };
 
