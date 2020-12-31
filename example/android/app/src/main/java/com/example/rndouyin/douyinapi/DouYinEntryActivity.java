@@ -31,6 +31,7 @@ import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.rndouyin.RndouyinModule;
+import com.rndouyin.modulelist;
 /**
  * 主要功能：接受授权返回结果的activity
  * <p>
@@ -44,8 +45,9 @@ public class DouYinEntryActivity extends Activity implements IApiEventHandler {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        douYinOpenApi = DouYinOpenApiFactory.create(this);
-        douYinOpenApi.handleIntent(getIntent(), this);
+//        douYinOpenApi = DouYinOpenApiFactory.create(this);
+//        douYinOpenApi.handleIntent(getIntent(), this);
+        modulelist.INSTANCE.handleIntent(getIntent());
         finish();
     }
 

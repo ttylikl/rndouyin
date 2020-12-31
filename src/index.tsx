@@ -3,7 +3,6 @@ import { EventEmitter } from 'events';
 
 type RndouyinType = {
   multiply(a: number, b: number): Promise<number>;
-  hellodouyin(): Promise<string>;
   dyauth(): Promise<string>;
   registerApp(clientKey: string): Promise<string>;
   sendAuthRequest(): Promise<any>;

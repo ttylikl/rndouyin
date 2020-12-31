@@ -31,7 +31,6 @@ export default class Home extends React.Component<Props, State> {
 
   onTest2 = async (e: any) => {
     console.log('onTest2', e);
-    //let msg: string = await Rndouyin.hellodouyin();
     let msg: string = await Rndouyin.foo();
     this.setState({ msg });
   };
@@ -39,8 +38,12 @@ export default class Home extends React.Component<Props, State> {
   onTest3 = async (e: any) => {
     console.log('onTest3', e);
     let msg: string = await Rndouyin.registerApp('awsxdh3k1fiojgnu'); // 申请完成后替换
+    console.log('registerApp', msg);
     this.setState({ msg });
-    await Rndouyin.sendAuthRequest();
+    let r = await Rndouyin.sendAuthRequest();
+    console.log('sendAuth:', r);
+    msg = msg + "\n" + r 
+    this.setState({ msg });
   };
 
   render() {
