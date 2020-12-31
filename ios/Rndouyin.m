@@ -62,6 +62,8 @@ RCT_REMAP_METHOD(dyauth,
             NSMutableDictionary *body = @{@"errCode":@(r.errCode)}.mutableCopy;
             body[@"errStr"] = r.errString;
             body[@"type"] = @"SendAuth.Resp";
+            body[@"authCode"] = r.code;
+            body[@"grantedPermissions"] = r.grantedPermissions;
             [thiz.bridge.eventDispatcher sendDeviceEventWithName:DouYinEventName body:body];
                     
             resolve(alertString);
