@@ -3,6 +3,7 @@ PODS:
   - CocoaAsyncSocket (7.6.5)
   - CocoaLibEvent (1.0.0)
   - DoubleConversion (1.1.6)
+  - DouyinOpenSDK (4.0.0)
   - FBLazyVector (0.63.4)
   - FBReactNativeSpec (0.63.4):
     - Folly (= 2020.01.13.00)
@@ -297,6 +298,7 @@ PODS:
     - React-cxxreact (= 0.63.4)
     - React-jsi (= 0.63.4)
   - rndouyin (0.1.0):
+    - DouyinOpenSDK
     - React-Core
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
@@ -304,6 +306,7 @@ PODS:
 
 DEPENDENCIES:
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
+  - DouyinOpenSDK (~> 4.0.0)
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
   - FBReactNativeSpec (from `../node_modules/react-native/Libraries/FBReactNativeSpec`)
   - Flipper (~> 0.54.0)
@@ -357,6 +360,7 @@ SPEC REPOS:
     - boost-for-react-native
     - CocoaAsyncSocket
     - CocoaLibEvent
+    - DouyinOpenSDK
     - Flipper
     - Flipper-DoubleConversion
     - Flipper-Folly
@@ -428,6 +432,7 @@ SPEC CHECKSUMS:
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   CocoaLibEvent: 2fab71b8bd46dd33ddb959f7928ec5909f838e3f
   DoubleConversion: cde416483dac037923206447da6e1454df403714
+  DouyinOpenSDK: 370f429928f1433547f296ccb2e47c2a85fddc0d
   FBLazyVector: 3bb422f41b18121b71783a905c10e58606f7dc3e
   FBReactNativeSpec: f2c97f2529dd79c083355182cc158c9f98f4bd6e
   Flipper: be611d4b742d8c87fbae2ca5f44603a02539e365
@@ -460,10 +465,10 @@ SPEC CHECKSUMS:
   React-RCTText: 5c51df3f08cb9dedc6e790161195d12bac06101c
   React-RCTVibration: ae4f914cfe8de7d4de95ae1ea6cc8f6315d73d9d
   ReactCommon: 73d79c7039f473b76db6ff7c6b159c478acbbb3b
-  rndouyin: 81c1af79d7baa339d6eb8c3f98627119c28b8813
+  rndouyin: cd1f1f519a401e11beba13d8ef830a5a7ef2c877
   Yoga: 4bd86afe9883422a7c4028c00e34790f560923d6
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 044cb1295c72dbcb2520a15aa3c6f18f034f0a3c
+PODFILE CHECKSUM: 14ed814b3f3e5edd3e5e03d90495ab10249609b6
 
 COCOAPODS: 1.8.4

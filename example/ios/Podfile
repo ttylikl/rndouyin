@@ -18,4 +18,7 @@ target 'RndouyinExample' do
   post_install do |installer|
     flipper_post_install(installer)
   end
+
+  pod 'DouyinOpenSDK', '~> 4.0.0'
+  
 end

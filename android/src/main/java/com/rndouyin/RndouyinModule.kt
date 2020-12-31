@@ -39,14 +39,6 @@ class RndouyinModule(reactContext: ReactApplicationContext) : ReactContextBaseJa
   }
 
   @ReactMethod
-  fun hellodouyin(promise: Promise) {
-
-    promise.resolve("hello from rndouyin!")
-
-  }
-
-
-  @ReactMethod
   fun registerApp(clientKey: String, promise: Promise) {
     if (appId != "") {
       promise.resolve("noop")
@@ -109,16 +101,7 @@ class RndouyinModule(reactContext: ReactApplicationContext) : ReactContextBaseJa
       map.putString("state", response.state)
       map.putString("grantedPermissions", response.grantedPermissions)
       map.putString("type", "SendAuth.Resp")
-//      val ctx: Context = this.getApplicationContext()
-//      val apc: Application = this.getApplication()
-//      val rapc = apc as ReactApplication
-//      val rhost = rapc.reactNativeHost
-//      val context = rhost.reactInstanceManager.currentReactContext
-//      val rctx = context as ReactApplicationContext?
-//      rctx!!.getJSModule(RCTDeviceEventEmitter::class.java)
-//        .emit("DouYin_Resp", map)
 
-//      var ctx: ReactApplicationContext? = this.currentActivity as ReactApplicationContext;
       var ctx: ReactApplicationContext? = this.getReactApplicationContext();
       ctx?.getJSModule(RCTDeviceEventEmitter::class.java)?.emit("DouYin_Resp", map)
     }
