@@ -33,9 +33,7 @@ class RndouyinModule(reactContext: ReactApplicationContext) : ReactContextBaseJa
   // See https://reactnative.dev/docs/native-modules-android
   @ReactMethod
   fun multiply(a: Int, b: Int, promise: Promise) {
-
     promise.resolve(a * b)
-
   }
 
   @ReactMethod
@@ -84,7 +82,7 @@ class RndouyinModule(reactContext: ReactApplicationContext) : ReactContextBaseJa
 //    } else
     if (resp.type == CommonConstants.ModeType.SEND_AUTH_RESPONSE) {
       val response = resp as Authorization.Response
-      val intent: Intent? = null
+      // val intent: Intent? = null
       /*
             步骤五： 获取auth code 结果返回说明#
             返回值及相关说明
