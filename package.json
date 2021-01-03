@@ -1,6 +1,6 @@
 {
   "name": "rndouyin",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "react native module for douyin sdk",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
