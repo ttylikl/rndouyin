@@ -40,7 +40,8 @@ export default class Home extends React.Component<Props, State> {
     let msg: string = await Rndouyin.registerApp('awsxdh3k1fiojgnu'); // 申请完成后替换
     console.log('registerApp', msg);
     this.setState({ msg });
-    let r = await Rndouyin.sendAuthRequest();
+    // sendAuthRequest参数（按顺序）： scope必选，scope1可选默认选中，scope0可选默认不选中，state可选状态变量
+    let r = await Rndouyin.sendAuthRequest();//"user_info,following.list", "fans.list,mobile"); // "user_info" 基础用户信息  "following.list" 关注列表  "fans.list" 粉丝列表
     console.log('sendAuth:', r);
     msg = msg + '\n' + JSON.stringify(r);
     this.setState({ msg });

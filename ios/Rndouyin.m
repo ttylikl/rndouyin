@@ -35,6 +35,10 @@ RCT_REMAP_METHOD(registerApp,
 
 
 RCT_REMAP_METHOD(dyauth,
+                 :(nonnull NSString*)scope
+                 :(nonnull NSString*)scope1
+                 :(nonnull NSString*)scope0
+                 :(nonnull NSString*)state
                  withResolver:(RCTPromiseResolveBlock)resolve
                  withRejecter:(RCTPromiseRejectBlock)reject)
 {
@@ -46,10 +50,30 @@ RCT_REMAP_METHOD(dyauth,
       //Your main thread code goes in here
       NSLog(@"Im on the main thread");
         DouyinOpenSDKAuthRequest *req = [[DouyinOpenSDKAuthRequest alloc] init];
-        req.permissions = [NSOrderedSet orderedSetWithObject:@"user_info"];
-        req.additionalPermissions = [NSOrderedSet orderedSetWithObjects:
-                                     @{ @"permission" : @"mobile", @"defaultChecked" : @"0" },
-                                     nil];
+        req.permissions = [NSOrderedSet orderedSetWithObject: scope]; // @"user_info"
+        if(![state isEqual:@""]) {
+            req.state = state;
+        }
+        NSMutableOrderedSet *mutableOrderSet = [[NSMutableOrderedSet alloc] init];
+        // [mutableOrderSet addObject: @{ @"permission" : @"mobile", @"defaultChecked" : @"0" }];
+        NSArray *list1 = [scope1 componentsSeparatedByString:@","];
+        for(NSString* sc1 in list1){
+            [mutableOrderSet addObject:@{ @"permission": sc1, @"defaultChecked" : @"1" }];
+        }
+        NSArray *list0 = [scope0 componentsSeparatedByString:@","];
+        for(NSString* sc0 in list0){
+            [mutableOrderSet addObject:@{ @"permission": sc0, @"defaultChecked" : @"0" }];
+        }
+//        if(![scope1 isEqual:@""]) {
+//            [mutableOrderSet addObject:@{ @"permission": scope1, @"defaultChecked" : @"1" }];
+//        }
+//        if(![scope0 isEqual:@""]) {
+//            [mutableOrderSet addObject:@{ @"permission": scope0, @"defaultChecked" : @"0" }];
+//        }
+        req.additionalPermissions = mutableOrderSet;
+//        req.additionalPermissions = [NSOrderedSet orderedSetWithObjects:
+//                                     @{ @"permission" : @"mobile", @"defaultChecked" : @"0" },
+//                                     nil];
         UIViewController *vc = [UIApplication sharedApplication].keyWindow.rootViewController;
         
         [req sendAuthRequestViewController:vc completeBlock:^(DouyinOpenSDKAuthResponse * _Nonnull r) {

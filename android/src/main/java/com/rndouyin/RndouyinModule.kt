@@ -56,12 +56,20 @@ class RndouyinModule(reactContext: ReactApplicationContext) : ReactContextBaseJa
   }
 
   @ReactMethod
-  fun dyauth(promise: Promise) {
+  fun dyauth(scope: String, scope1: String, scope0: String, state: String, promise: Promise) {
     var request: Authorization.Request = Authorization.Request();
-    request.scope = "user_info";                          // 用户授权时必选权限
+    request.scope = scope; // 默认应该是这个"user_info";                          // 用户授权时必选权限
 //                request.optionalScope1 = mOptionalScope2;     // 用户授权时可选权限（默认选择）
 //                request.optionalScope0 = mOptionalScope1;    // 用户授权时可选权限（默认不选）
-    request.state = "ww";                                   // 用于保持请求和回调的状态，授权请求后原样带回给第三方。
+    if(scope0 != "") {
+      request.optionalScope0 = scope0 // 用户授权时可选权限（默认不选）
+    }
+    if(scope1 != "") {
+      request.optionalScope1 = scope1 // 用户授权时可选权限（默认选择）
+    };
+    if(state != "") {
+      request.state = state //"ww";                                   // 用于保持请求和回调的状态，授权请求后原样带回给第三方。
+    };
     douYinOpenApi.authorize(request);               // 优先使用抖音app进行授权，如果抖音app因版本或者其他原因无法授权，则使用wap页授权
 
     promise.resolve("called")
