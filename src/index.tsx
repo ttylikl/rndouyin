@@ -25,7 +25,12 @@ Rndouyin.foo = (): Promise<any> => {
   });
 };
 
-Rndouyin.sendAuthRequest = (scope: string = "user_info", scope1: string = "", scope0: string = "", state: string = ""): Promise<any> => {
+Rndouyin.sendAuthRequest = (
+  scope: string = "user_info",
+  scope1: string = "",
+  scope0: string = "",
+  state: string = ""
+  ): Promise<any> => {
   return new Promise((resolve, _) => {
     emitter.once('SendAuth.Resp', (resp) => {
       console.log('SendAuth.Resp', resp);
