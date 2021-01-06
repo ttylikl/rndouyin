@@ -42,38 +42,31 @@ RCT_REMAP_METHOD(dyauth,
                  withResolver:(RCTPromiseResolveBlock)resolve
                  withRejecter:(RCTPromiseRejectBlock)reject)
 {
-//    [UIApplication sharedApplication].delegate;
-//    UIViewController
-//    [DouyinOpenSDKApplicationDelegate sharedInstance]
     Rndouyin *thiz = self;
     dispatch_async(dispatch_get_main_queue(), ^{
-      //Your main thread code goes in here
-      NSLog(@"Im on the main thread");
+        //Your main thread code goes in here
+        NSLog(@"Im on the main thread");
         DouyinOpenSDKAuthRequest *req = [[DouyinOpenSDKAuthRequest alloc] init];
         req.permissions = [NSOrderedSet orderedSetWithObject: scope]; // @"user_info"
         if(![state isEqual:@""]) {
             req.state = state;
         }
         NSMutableOrderedSet *mutableOrderSet = [[NSMutableOrderedSet alloc] init];
-        // [mutableOrderSet addObject: @{ @"permission" : @"mobile", @"defaultChecked" : @"0" }];
-        NSArray *list1 = [scope1 componentsSeparatedByString:@","];
-        for(NSString* sc1 in list1){
-            [mutableOrderSet addObject:@{ @"permission": sc1, @"defaultChecked" : @"1" }];
+        if(![scope1 isEqual:@""]) {
+            NSArray *list1 = [scope1 componentsSeparatedByString:@","];
+            for(NSString* sc1 in list1){
+                [mutableOrderSet addObject:@{ @"permission": sc1, @"defaultChecked" : @"1" }];
+            }
         }
-        NSArray *list0 = [scope0 componentsSeparatedByString:@","];
-        for(NSString* sc0 in list0){
-            [mutableOrderSet addObject:@{ @"permission": sc0, @"defaultChecked" : @"0" }];
+        if(![scope0 isEqual:@""]) {
+            NSArray *list0 = [scope0 componentsSeparatedByString:@","];
+            for(NSString* sc0 in list0){
+                [mutableOrderSet addObject:@{ @"permission": sc0, @"defaultChecked" : @"0" }];
+            }
         }
-//        if(![scope1 isEqual:@""]) {
-//            [mutableOrderSet addObject:@{ @"permission": scope1, @"defaultChecked" : @"1" }];
-//        }
-//        if(![scope0 isEqual:@""]) {
-//            [mutableOrderSet addObject:@{ @"permission": scope0, @"defaultChecked" : @"0" }];
-//        }
+
         req.additionalPermissions = mutableOrderSet;
-//        req.additionalPermissions = [NSOrderedSet orderedSetWithObjects:
-//                                     @{ @"permission" : @"mobile", @"defaultChecked" : @"0" },
-//                                     nil];
+        
         UIViewController *vc = [UIApplication sharedApplication].keyWindow.rootViewController;
         
         [req sendAuthRequestViewController:vc completeBlock:^(DouyinOpenSDKAuthResponse * _Nonnull r) {
