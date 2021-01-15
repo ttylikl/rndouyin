@@ -55,6 +55,7 @@ class RndouyinModule(reactContext: ReactApplicationContext) : ReactContextBaseJa
     }
   }
 
+  // TODO: 是否可以反复init配置不同的clientKey？是否可以在本模块的init里设法获取到一个Activity？
   fun doConfig(clientKey: String?, currentActivity: Activity): String {
     if(douYinOpenApi) {
       return;
