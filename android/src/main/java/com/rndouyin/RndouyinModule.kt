@@ -20,8 +20,7 @@ import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEm
 
 class RndouyinModule(reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext), IApiEventHandler {
 
-  lateinit var douYinOpenApi: DouYinOpenApi
-  var appId: String = ""
+  var douYinOpenApi: DouYinOpenApi = null
   val TAG: String = "RndouyinModule"
 
   override fun getName(): String {
@@ -57,6 +56,9 @@ class RndouyinModule(reactContext: ReactApplicationContext) : ReactContextBaseJa
   }
 
   fun doConfig(clientKey: String?, currentActivity: Activity): String {
+    if(douYinOpenApi) {
+      return;
+    }
     DouYinOpenApiFactory.init(DouYinOpenConfig(clientKey));
 
     // 初始化api,需要传入targetApp,默认为TikTok
@@ -66,20 +68,16 @@ class RndouyinModule(reactContext: ReactApplicationContext) : ReactContextBaseJa
 
   @ReactMethod
   fun registerApp(clientKey: String, promise: Promise) {
-    promise.resolve("Deprecated, config clientKey with '<meta-data android:name=\"DouYinClientKey\" android:value=\"\${DouYinClientKey}\"/>' @ AndroidManifest.xml")
-    if (appId != "") {
+    if(douYinOpenApi) {
       promise.resolve("noop")
-      return
-    }
+      return;
+    } 
     var currentActivity: Activity? = getCurrentActivity()
     if (currentActivity == null) {
       promise.resolve("currentActivity is null!")
       return
     }
     var ret: String = doConfig(clientKey, currentActivity)
-    if(ret == "ok") {
-      appId = clientKey
-    }
     promise.resolve(ret)
   }
 
