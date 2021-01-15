@@ -1,8 +1,10 @@
 package com.rndouyin
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
+import android.content.pm.ApplicationInfo
+import android.content.pm.PackageManager
+import android.util.Log
 import com.bytedance.sdk.open.aweme.CommonConstants
 import com.bytedance.sdk.open.aweme.authorize.model.Authorization
 import com.bytedance.sdk.open.aweme.common.handler.IApiEventHandler
@@ -13,14 +15,14 @@ import com.bytedance.sdk.open.douyin.DouYinOpenConfig
 import com.bytedance.sdk.open.douyin.api.DouYinOpenApi
 import com.facebook.common.logging.FLog
 import com.facebook.react.bridge.*
-import com.facebook.react.modules.core.DeviceEventManagerModule
 import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter
-import com.rndouyin.modulelist
+
 
 class RndouyinModule(reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext), IApiEventHandler {
 
   lateinit var douYinOpenApi: DouYinOpenApi
   var appId: String = ""
+  val TAG: String = "RndouyinModule"
 
   override fun getName(): String {
     return "Rndouyin"
@@ -36,8 +38,35 @@ class RndouyinModule(reactContext: ReactApplicationContext) : ReactContextBaseJa
     promise.resolve(a * b)
   }
 
+  fun doConfigWithActivity(act: Activity) {
+    var applicationInfo: ApplicationInfo? = null
+    try {
+      var reactContext: ReactApplicationContext = this.reactApplicationContext;
+      applicationInfo = reactContext.packageManager.getApplicationInfo(reactContext.packageName, PackageManager.GET_META_DATA)
+    } catch (e: PackageManager.NameNotFoundException) {
+      e.printStackTrace()
+    }
+    if (applicationInfo != null) {
+      val clientKey = applicationInfo!!.metaData.getString("DouYinClientKey")
+      var ret: String? = doConfig(clientKey, act);
+      Log.d(TAG, "clientKey");
+      Log.d(TAG, clientKey);
+      Log.d(TAG, "ret");
+      Log.d(TAG, ret);
+    }
+  }
+
+  fun doConfig(clientKey: String?, currentActivity: Activity): String {
+    DouYinOpenApiFactory.init(DouYinOpenConfig(clientKey));
+
+    // 初始化api,需要传入targetApp,默认为TikTok
+    douYinOpenApi = DouYinOpenApiFactory.create(currentActivity)
+    return "ok"
+  }
+
   @ReactMethod
   fun registerApp(clientKey: String, promise: Promise) {
+    promise.resolve("Deprecated, config clientKey with '<meta-data android:name=\"DouYinClientKey\" android:value=\"\${DouYinClientKey}\"/>' @ AndroidManifest.xml")
     if (appId != "") {
       promise.resolve("noop")
       return
@@ -47,12 +76,11 @@ class RndouyinModule(reactContext: ReactApplicationContext) : ReactContextBaseJa
       promise.resolve("currentActivity is null!")
       return
     }
-    DouYinOpenApiFactory.init(DouYinOpenConfig(clientKey));
-
-    // 初始化api,需要传入targetApp,默认为TikTok
-    douYinOpenApi = DouYinOpenApiFactory.create(currentActivity)
-    appId = clientKey
-    promise.resolve("ok")
+    var ret: String = doConfig(clientKey, currentActivity)
+    if(ret == "ok") {
+      appId = clientKey
+    }
+    promise.resolve(ret)
   }
 
   @ReactMethod
@@ -131,3 +159,5 @@ class RndouyinModule(reactContext: ReactApplicationContext) : ReactContextBaseJa
 //  }
 
 }
+
+

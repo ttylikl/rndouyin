@@ -1,5 +1,6 @@
 package com.rndouyin
 
+import android.app.Activity
 import android.content.Intent
 
 public object modulelist {
@@ -10,6 +11,11 @@ public object modulelist {
   fun handleIntent(intent: Intent) {
     for(m: RndouyinModule in mlist) {
       m.handleIntent(intent)
+    }
+  }
+  fun updateDouYinOpenApi(  act: Activity) {
+    for(m: RndouyinModule in mlist) {
+      m.doConfigWithActivity(act)
     }
   }
 }
